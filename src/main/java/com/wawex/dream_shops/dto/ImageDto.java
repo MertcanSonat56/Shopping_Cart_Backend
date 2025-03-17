@@ -5,23 +5,34 @@ import lombok.Data;
 @Data
 public class ImageDto {
 
-    private Long imageId;
+    private Long id;
     private String imageName;
     private String downloadUrl;
+  
+    public Long getId() {
+        return id;
+    }
 
-    public void setImageId(Long imageId) {
-        this.imageId = imageId;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    // Getter and Setter for 'imageName'
+    public String getImageName() {
+        return imageName;
     }
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
     }
 
-    public String getImageName() {
-        return imageName;
+    // Getter and Setter for 'downloadUrl'
+    public String getDownloadUrl() {
+        return downloadUrl;
     }
 
     public void setDownloadUrl(String downloadUrl) {
         this.downloadUrl = downloadUrl;
     }
+    
 }

@@ -5,6 +5,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.wawex.dream_shops.dto.ImageDto;
 import com.wawex.dream_shops.model.Image;
 
+
 public interface IImageService {
 
     Image getImageById(Long id);

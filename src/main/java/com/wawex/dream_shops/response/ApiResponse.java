@@ -1,15 +1,23 @@
 package com.wawex.dream_shops.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import java.util.List;
+import com.wawex.dream_shops.dto.ImageDto;
 
-@AllArgsConstructor
-@Data
+
 public class ApiResponse {
-
     private String message;
-    private Object data;
-}
+    private List<ImageDto> imageDtos;
 
+    public ApiResponse() {
+        // default constructor
+    }
+
+    public ApiResponse(String message, List<ImageDto> imageDtos) {
+        this.message = message;
+        this.imageDtos = imageDtos;
+    }
+    
+
+}
 
 

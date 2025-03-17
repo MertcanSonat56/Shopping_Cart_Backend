@@ -1,6 +1,8 @@
 package com.wawex.dream_shops.service.product;
 
 import java.util.List;
+
+import com.wawex.dream_shops.dto.ProductDto;
 import com.wawex.dream_shops.model.Product;
 import com.wawex.dream_shops.request.AddProductRequest;
 import com.wawex.dream_shops.request.ProductUpdateRequest;
@@ -19,7 +21,7 @@ public interface IProductService {
     List<Product> getProductsByCategoryAndBrand(String category, String brand);
     List<Product> getProductsByName(String name);
     List<Product> getProductsByBrandAndName(String category, String name);
+    List<ProductDto> getConvertedProducts(List<Product> products);
     Long countProductsByBrandAndName(String brand, String name);
-    
-    
+    ProductDto convertToDto(Product product); 
 }

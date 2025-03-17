@@ -2,18 +2,20 @@ package com.wawex.dream_shops.service.product;
 
 import java.util.List;
 import java.util.Optional;
-
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
-
+import com.wawex.dream_shops.dto.ImageDto;
+import com.wawex.dream_shops.dto.ProductDto;
 import com.wawex.dream_shops.exceptions.ProductNotFoundException;
 import com.wawex.dream_shops.model.Category;
+import com.wawex.dream_shops.model.Image;
 import com.wawex.dream_shops.model.Product;
 import com.wawex.dream_shops.repository.CategoryRepository;
 import com.wawex.dream_shops.repository.ProductRepository;
 import com.wawex.dream_shops.request.AddProductRequest;
 import com.wawex.dream_shops.request.ProductUpdateRequest;
-
 import lombok.RequiredArgsConstructor;
+import com.wawex.dream_shops.repository.ImageRepository;
 
 @Service
 @RequiredArgsConstructor
@@ -21,21 +23,19 @@ public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
-
+    private final ModelMapper modelMapper;
+    private final ImageRepository imageRepository;
+    
     public ProductService() {
 
         this.productRepository = null;
         this.categoryRepository = null;
+        this.modelMapper = null;
+        this.imageRepository = null;
     }
     
-
     @Override
     public Product addProduct(AddProductRequest request) {
-
-        // check if the category is found in the DB
-        // If Yes, set it as the new product category
-        // If No, the save it as a new category
-        // The set as the new product category.
         
         Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()))
         .orElseGet(() ->{
@@ -46,7 +46,6 @@ public class ProductService implements IProductService {
         request.setCategory(category);
         return productRepository.save(createProduct(request, category));
     }
-        
 
     private Product createProduct(AddProductRequest request, Category category) {
         return new Product(
@@ -128,7 +127,22 @@ public class ProductService implements IProductService {
         return productRepository.countByBrandAndName(brand, name);
     }
 
+    @Override
+    public List<ProductDto> getConvertedProducts(List<Product> products) {
+        return products.stream().map(this::convertToDto).toList();
+    }
+
+    @Override
+    public ProductDto convertToDto(Product product) {
+
+        ProductDto productDto = modelMapper.map(product, ProductDto.class);
+        
+        List<Image> images = imageRepository.findByProductId(product.getId());
+        List<ImageDto> imageDtos = images.stream().map(image -> modelMapper.map(image, ImageDto.class)).toList();
+        
+        productDto.setImages(imageDtos);
+        return productDto;
+    }
     
 
-   
 }
