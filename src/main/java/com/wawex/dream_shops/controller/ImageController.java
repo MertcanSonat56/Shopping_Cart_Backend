@@ -2,6 +2,7 @@ package com.wawex.dream_shops.controller;
 
 import java.sql.SQLException;
 import java.util.List;
+
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
 import com.wawex.dream_shops.DreamShopsApplication;
 import com.wawex.dream_shops.dto.ImageDto;
 import com.wawex.dream_shops.exceptions.ResourceNotFoundException;
@@ -26,6 +28,7 @@ import com.wawex.dream_shops.model.Image;
 import com.wawex.dream_shops.repository.CategoryRepository;
 import com.wawex.dream_shops.repository.ImageRepository;
 import com.wawex.dream_shops.response.ApiResponse;
+import com.wawex.dream_shops.response.ImageApiResponse;
 import com.wawex.dream_shops.service.category.CategoryService;
 import com.wawex.dream_shops.service.image.IImageService;
 
@@ -66,41 +69,41 @@ public class ImageController {
     }
 
     @PutMapping("/image/{image}/update")
-    public ResponseEntity<ApiResponse> updateImage(@PathVariable Long imageId, @RequestBody MultipartFile file) {
+    public ResponseEntity<ImageApiResponse> updateImage(@PathVariable Long imageId, @RequestBody MultipartFile file) {
 
         try {
             Image image = imageService.getImageById(imageId);
 
             if (image != null) {
                 imageService.updateImage(file, imageId);
-                return ResponseEntity.ok(new ApiResponse("Update success!", null));
+                return ResponseEntity.ok(new ImageApiResponse("Update success!", image));
             }
         } 
         
         catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
+            return ResponseEntity.status(NOT_FOUND).body(new ImageApiResponse(e.getMessage(), null));
         }
 
-        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse("Update failed!", null));
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ImageApiResponse("Update failed!", null));
     }
 
     @DeleteMapping("/image/{imageId}/delete")
-    public ResponseEntity<ApiResponse> deleteImage(@PathVariable Long imageId) {
+    public ResponseEntity<ImageApiResponse> deleteImage(@PathVariable Long imageId) {
         
         try {
             Image image = imageService.getImageById(imageId);
             
             if(image != null) {
                 imageService.deleteImageById(imageId);
-                return ResponseEntity.ok(new ApiResponse("Delete success!", null));
+                return ResponseEntity.ok(new ImageApiResponse("Delete success!", image));
             }
         }
 
         catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
+            return ResponseEntity.status(NOT_FOUND).body(new ImageApiResponse(e.getMessage(), null));
         }
 
-        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse("Delete failed!", null));
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ImageApiResponse("Delete failed!", null));
     }
 }
 

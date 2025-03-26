@@ -13,18 +13,17 @@ import com.wawex.dream_shops.model.Image;
 import com.wawex.dream_shops.model.Product;
 import com.wawex.dream_shops.repository.ImageRepository;
 import com.wawex.dream_shops.service.product.IProductService;
-import lombok.RequiredArgsConstructor;
+
 
 @Service
-@RequiredArgsConstructor
 public class ImageService implements IImageService {
 
     private final ImageRepository imageRepository;
     private final IProductService productService;
 
-    public ImageService() {
-        this.imageRepository = null;
-        this.productService = null;
+    public ImageService(ImageRepository imageRepository, IProductService productService) {
+        this.imageRepository = imageRepository;
+        this.productService = productService;
     }
 
     @Override

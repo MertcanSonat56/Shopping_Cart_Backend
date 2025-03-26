@@ -7,16 +7,16 @@ import com.wawex.dream_shops.exceptions.AlreadyExistsException;
 import com.wawex.dream_shops.exceptions.ResourceNotFoundException;
 import com.wawex.dream_shops.model.Category;
 import com.wawex.dream_shops.repository.CategoryRepository;
-import lombok.RequiredArgsConstructor;
+
 
 @Service
-@RequiredArgsConstructor
+
 public class CategoryService implements ICategoryService {
 
     private final CategoryRepository categoryRepository;
 
-    public CategoryService() {
-        this.categoryRepository = null;
+    public CategoryService(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 
     @Override

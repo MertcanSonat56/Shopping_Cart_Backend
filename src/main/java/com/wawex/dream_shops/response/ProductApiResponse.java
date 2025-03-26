@@ -1,12 +1,14 @@
 package com.wawex.dream_shops.response;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import com.wawex.dream_shops.model.Product;
 
-@AllArgsConstructor
-@Data
 public class ProductApiResponse {
-    
+
     private String message;
-    private Object data;
+    private Product product;
+
+    public ProductApiResponse(String message, Product product) {
+        this.message = message;
+        this.product = product;
+    }
 }

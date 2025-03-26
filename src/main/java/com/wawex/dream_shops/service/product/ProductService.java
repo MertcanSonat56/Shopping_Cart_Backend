@@ -14,11 +14,9 @@ import com.wawex.dream_shops.repository.CategoryRepository;
 import com.wawex.dream_shops.repository.ProductRepository;
 import com.wawex.dream_shops.request.AddProductRequest;
 import com.wawex.dream_shops.request.ProductUpdateRequest;
-import lombok.RequiredArgsConstructor;
 import com.wawex.dream_shops.repository.ImageRepository;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService implements IProductService {
 
     private final ProductRepository productRepository;
@@ -26,12 +24,12 @@ public class ProductService implements IProductService {
     private final ModelMapper modelMapper;
     private final ImageRepository imageRepository;
     
-    public ProductService() {
+    public ProductService(ProductRepository productRepository, CategoryRepository categoryRepository, ModelMapper modelMapper, ImageRepository imageRepository) {
 
-        this.productRepository = null;
-        this.categoryRepository = null;
-        this.modelMapper = null;
-        this.imageRepository = null;
+        this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
+        this.modelMapper = modelMapper;
+        this.imageRepository = imageRepository;
     }
     
     @Override
