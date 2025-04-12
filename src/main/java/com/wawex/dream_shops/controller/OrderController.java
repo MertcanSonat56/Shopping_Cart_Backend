@@ -1,6 +1,7 @@
 package com.wawex.dream_shops.controller;
 
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.wawex.dream_shops.dto.OrderDto;
 import com.wawex.dream_shops.exceptions.ResourceNotFoundException;
 import com.wawex.dream_shops.model.Order;
 import com.wawex.dream_shops.response.ApiResponse;
@@ -39,15 +42,15 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}/order") 
-    public ResponseEntity<OrderApiResponse> getOrderById(@PathVariable Long orderId) {
+    public ResponseEntity<ApiResponse> getOrderById(@PathVariable Long orderId) {
         
         try {
-            Order order = orderService.getOrder(orderId);
-            return ResponseEntity.ok(new OrderApiResponse("Item Order Success!", order));
+            OrderDto order = orderService.getOrder(orderId);
+            return ResponseEntity.ok(new ApiResponse("Item Order Success!", null));
         }
 
         catch (ResourceNotFoundException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new OrderApiResponse(e.getMessage(), null));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
         }
     }
 
@@ -55,7 +58,7 @@ public class OrderController {
     public ResponseEntity<ApiResponse> getUserOrders(@PathVariable Long userId) {
         
         try {
-            List<Order> order = orderService.getUserOrders(userId);
+            List<OrderDto> order = orderService.getUserOrders(userId);
             return ResponseEntity.ok(new ApiResponse("Item Order Success!", null));
         }
 

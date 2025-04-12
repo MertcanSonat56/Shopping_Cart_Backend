@@ -2,7 +2,6 @@ package com.wawex.dream_shops.controller;
 
 import java.sql.SQLException;
 import java.util.List;
-
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.wawex.dream_shops.DreamShopsApplication;
 import com.wawex.dream_shops.dto.ImageDto;
 import com.wawex.dream_shops.exceptions.ResourceNotFoundException;
