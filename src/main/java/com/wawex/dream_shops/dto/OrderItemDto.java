@@ -7,9 +7,20 @@ import lombok.Data;
 public class OrderItemDto {
     
     private Long productId;
+
     private String productName;
+    private String productBrand;
+
     private int quantity;
     private BigDecimal price;
+
+    public void setProductBrand(String productBrand) {
+        this.productBrand = productBrand;
+    }
+
+    public String getProductBrand() {
+        return productBrand;
+    }
 
     public Long getProductId() {
         return productId;
@@ -43,3 +54,6 @@ public class OrderItemDto {
         this.price = price;
     }
 }
+
+
+

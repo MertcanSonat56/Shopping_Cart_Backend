@@ -1,9 +1,7 @@
 package com.wawex.dream_shops.model;
 
 import java.math.BigDecimal;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +30,7 @@ public class CartItem {
     private Product product;
 
     private int quantity;
+    
     private BigDecimal unitPrice;
     private BigDecimal totalPrice;
     

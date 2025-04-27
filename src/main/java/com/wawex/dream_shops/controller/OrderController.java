@@ -1,7 +1,6 @@
 package com.wawex.dream_shops.controller;
 
 import java.util.List;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,7 +9,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.wawex.dream_shops.dto.OrderDto;
 import com.wawex.dream_shops.exceptions.ResourceNotFoundException;
 import com.wawex.dream_shops.model.Order;
@@ -32,8 +30,11 @@ public class OrderController {
     public ResponseEntity<OrderApiResponse> createOrder(@RequestParam Long userId) {
 
         try {
+
             Order order = orderService.placeOrder(userId);
-            return ResponseEntity.ok(new OrderApiResponse("Item Order Success!", order));
+            OrderDto orderDto = orderService.convertToDto(order);
+
+            return ResponseEntity.ok(new OrderApiResponse("Item Order Success!", orderDto));
         }
 
         catch (Exception e) {

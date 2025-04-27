@@ -2,9 +2,6 @@ package com.wawex.dream_shops.model;
 
 import java.math.BigDecimal;
 import java.util.List;
-
-import com.wawex.dream_shops.dto.ImageDto;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

@@ -1,7 +1,9 @@
 package com.wawex.dream_shops.service.user;
 
 import java.util.Optional;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import com.wawex.dream_shops.dto.UserDto;
 import com.wawex.dream_shops.exceptions.AlreadyExistsException;
 import com.wawex.dream_shops.exceptions.ResourceNotFoundException;
 import com.wawex.dream_shops.model.User;
@@ -14,8 +16,10 @@ import com.wawex.dream_shops.request.UserUpdateRequest;
 public class UserService implements IUserService {
 
     private final UserRepository userRepository;
+    private final ModelMapper modelMapper;
 
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
         this.userRepository = userRepository;
     }
 
@@ -55,11 +59,14 @@ public class UserService implements IUserService {
 
     @Override
     public void deleteUser(Long userId) {
+        
         userRepository.findById(userId).ifPresentOrElse(userRepository::delete, () -> {
             throw new ResourceNotFoundException("User not found");
         });
     }
 
-    
-
+    @Override
+    public UserDto convertUserToDto(User user) {
+        return modelMapper.map(user, UserDto.class);
+    }
 }

@@ -1,6 +1,9 @@
 package com.wawex.dream_shops.model;
 
 import java.util.List;
+
+import org.hibernate.annotations.NaturalId;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -23,7 +26,10 @@ public class User {
 
     private String firstName;
     private String lastName;
+    
+    @NaturalId
     private String email;
+    
     private String password;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)   

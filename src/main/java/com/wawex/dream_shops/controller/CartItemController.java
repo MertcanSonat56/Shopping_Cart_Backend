@@ -12,7 +12,10 @@ import com.wawex.dream_shops.exceptions.ResourceNotFoundException;
 import com.wawex.dream_shops.response.CartApiResponse;
 import com.wawex.dream_shops.service.cart.ICartItemService;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
+import com.wawex.dream_shops.model.User;
+import com.wawex.dream_shops.model.Cart;
 import com.wawex.dream_shops.service.cart.ICartService;
+import com.wawex.dream_shops.service.user.IUserService;
 
 
 @RestController
@@ -21,23 +24,23 @@ public class CartItemController {
 
     private final ICartItemService cartItemService;
     private final ICartService cartService;
+    private final IUserService userService;
 
-    public CartItemController(ICartItemService cartItemService, ICartService cartService) {
+    public CartItemController(ICartItemService cartItemService, ICartService cartService, IUserService userService) {
         this.cartItemService = cartItemService;
         this.cartService = cartService;
+        this.userService = userService;
     }
 
     @PostMapping("/item/add")
-    public ResponseEntity<CartApiResponse> addItemToCart(@RequestParam(required = false) Long cartId, @RequestParam Long productId, @RequestParam Integer quantity) {
+    public ResponseEntity<CartApiResponse> addItemToCart(@RequestParam Long productId, @RequestParam Integer quantity) {
         
         try {
 
-            if (cartId == null) {
-                cartId = cartService.initializeNewCart();
+            User user = userService.getUserById(1L);
+            Cart cart = cartService.initializeNewCart(user);
 
-            }
-
-            cartItemService.addItemToCart(cartId, productId, quantity);
+            cartItemService.addItemToCart(cart.getId(),productId, quantity);
             return ResponseEntity.ok(new CartApiResponse("Add Item Success", null));
         }
 
